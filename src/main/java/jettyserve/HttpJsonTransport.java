@@ -67,7 +67,7 @@ public class HttpJsonTransport {
     AbstractHandler handler = new AbstractHandler() { 
       public void handle(String target, Request request, HttpServletRequest servletRequest, 
               HttpServletResponse response) throws IOException, ServletException {
-          int MAX_BODY_SIZE = 1024; // Can only handle bodies of up to 1024 bytes.
+          int MAX_BODY_SIZE = 10240; // Can only handle bodies of up to 10240 bytes.
           byte[] b = new byte[MAX_BODY_SIZE];
           int offset = 0;
           int numBytesRead;
@@ -93,7 +93,8 @@ System.out.println("200 status code");
           }
          response.getOutputStream().flush();
           
-          System.out.println("Done writing");
+         String messageResponse = new String(b);
+          System.out.println("Done writing:"+messageResponse);
          
       } 
     }; 
