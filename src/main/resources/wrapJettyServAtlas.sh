@@ -2,7 +2,6 @@
 HADOOP_HOME_PATH=/usr/hdp/current/hadoop-client
 HADOOP_CONFIG_SCRIPT=$HADOOP_HOME_PATH/libexec/hadoop-config.sh
 HADOOP_CLIENT_LIBS=$HADOOP_HOME_PATH/client
-## including hs2 libs because of the dependency on guava 0.12 or greater. hdfs client libs have guava 0.11 only.
 ATLAS_SQOOP_LIBS=/usr/hdp/current/atlas-client/hook/sqoop/atlas-sqoop-plugin-impl
 ATLAS_CONF_DIR=/etc/atlas/conf
 if [ -e $HADOOP_CONFIG_SCRIPT ] ; then
@@ -20,8 +19,6 @@ OPTS="-Dlog4j.configuration=file:$LOG4J_PROP_FILE"
 
 ##Class and options passed
 CLASS=jettyserve.MainClass
-##export FILE_FQDN=$WORKING_DIR/hdp_ranger_policy_input.json
-##UPN="hdfs-tech@TECH.HDP.hdphost.COM"
 ATLAS_SERVER_HOST="zulu.hdp.com"
 PORT="3333"
 
