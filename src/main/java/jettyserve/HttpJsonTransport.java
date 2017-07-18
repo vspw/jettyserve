@@ -157,16 +157,25 @@ public class HttpJsonTransport {
 		String[] atlasEndpoint = atlasConf.getStringArray(ATLAS_ENDPOINT);
 		String DEFAULT_DGI_URL = "http://localhost:21000/";
 		if (atlasEndpoint == null || atlasEndpoint.length == 0){
+			LOG.warn("HWX:ServerSide: Atlas Endpoint is Null. fall back to defalut atlas endpoint ");
 			atlasEndpoint = new String[] { DEFAULT_DGI_URL };
 		}
+		for(String endp:atlasEndpoint)
+		{
+			LOG.debug("HWX:ServerSide: Atlas Endpoint:"+endp);
+		}
+		LOG.debug("HWX:ServerSide: Atlas Endpoint:"+atlasEndpoint[0]);
 		AtlasClient atlasClient;
 
 		if (!AuthenticationUtil.isKerberosAuthenticationEnabled()) {
 			//String[] basicAuthUsernamePassword = AuthenticationUtil.getBasicAuthenticationInput();
+			LOG.debug("HWX:ServerSide: Client create with no kerberos authentication");
 			atlasClient = new AtlasClient(atlasEndpoint, new String[]{"T93KOAI", "Monday14"});
 		} else {
-			UserGroupInformation ugi = UserGroupInformation.getCurrentUser();
-			atlasClient = new AtlasClient(ugi, ugi.getShortUserName(), atlasEndpoint);
+			//UserGroupInformation ugi = UserGroupInformation.getCurrentUser();
+			//atlasClient = new AtlasClient(ugi, ugi.getShortUserName(), atlasEndpoint);
+			LOG.debug("HWX:ServerSide: Client create with kerberos authentication but using ldap authentication");
+			atlasClient = new AtlasClient(atlasEndpoint, new String[]{"T93KOAI", "Monday14"});
 		}
 		LOG.info("HWX:ServerSide: Creating Entity using Atlas Client");
 		LOG.debug("HWX:ServerSide: createRequestGetEntities: "+objEntityCreateRequest.getEntities());
